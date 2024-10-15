@@ -80,30 +80,32 @@ document.addEventListener('DOMContentLoaded', function() {
     browser.storage.sync.set({defaultQuality}, function() {
       console.log('Default quality set to:', defaultQuality);
       // Add a visual feedback for the user
-      showFeedback(`Default quality set to ${qualityMap[defaultQuality]}`);
+      showSuccessPopup(`Default quality set to ${qualityMap[defaultQuality]}`);
     });
   });
 
   // Function to show feedback to the user
-  function showFeedback(message) {
-    const feedback = document.createElement('div');
-    feedback.textContent = message;
-    feedback.style.cssText = `
+  function showSuccessPopup(message) { 
+    const popup = document.createElement('div');
+    popup.style.cssText = `
       position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 20px;
+      right: 20px;
       background-color: #4CAF50;
       color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 16px;
+      border-radius: 4px;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
       font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     `;
-    document.body.appendChild(feedback);
+    popup.textContent = message;
+    document.body.appendChild(popup);
     setTimeout(() => {
-      feedback.style.transition = 'opacity 0.5s';
-      feedback.style.opacity = '0';
-      setTimeout(() => feedback.remove(), 500);
+      popup.style.transition = 'opacity 0.5s';
+      popup.style.opacity = '0';
+      setTimeout(() => popup.remove(), 500);
     }, 1000);
   }
 
