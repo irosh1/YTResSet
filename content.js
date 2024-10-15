@@ -3,7 +3,7 @@ let attemptCount = 0;
 let defaultQuality = 'auto';
 let maxAttempts = 3;
 let lastPopupTime = 0;
-const popupCooldown = 5000; // 5 seconds cooldown
+const popupCooldown = 5000;
 
 // Initialize default quality from storage
 browser.storage.local.get('defaultQuality', function(data) {
