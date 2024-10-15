@@ -1,14 +1,16 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "YTResSet",
-  "version": "1.1",
-  "description": "YTResSet is a handy Firefox extension that lets you take control of your YouTube viewing experience. With YTResSet, you can easily set custom video resolutions for specific YouTube channels, ensuring you always watch videos in your preferred quality. Say goodbye to frustrating buffering and low-resolution videos!",
+  "version": "1.0",
+  "description": "Set custom video resolutions for YouTube channels. Control your viewing experience and avoid buffering issues.",
   "permissions": [
     "storage",
     "activeTab",
-    "*://www.youtube.com/*",
     "notifications",
     "tabs"
+  ],
+  "host_permissions": [
+    "*://www.youtube.com/*"
   ],
   "content_scripts": [
     {
@@ -16,7 +18,7 @@
       "js": ["content.js"]
     }
   ],
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icon16.png",
@@ -30,19 +32,19 @@
     "128": "icon128.png"
   },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   },
-  "content_security_policy": "script-src 'self'; object-src 'self'",
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "YTResSet@YTResSet.com"
-    }
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
   },
-  "web_accessible_resources": [
-    "consent.js",
-    "delete.svg",
-    "icon.png",
-    "refresh.svg"
-  ]
+  "web_accessible_resources": [{
+    "resources": [
+      "consent.js",
+      "delete.svg",
+      "icon.png",
+      "refresh.svg",
+      "inject.js"
+    ],
+    "matches": ["*://www.youtube.com/*"]
+  }]
 }

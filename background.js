@@ -1,3 +1,3 @@
-browser.browserAction.onClicked.addListener(() => {
-  browser.browserAction.setPopup({popup: "popup.html"});
+chrome.action.onClicked.addListener((tab) => {
+  chrome.action.setPopup({popup: "popup.html"});
 });

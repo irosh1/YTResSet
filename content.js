@@ -6,12 +6,12 @@ let lastPopupTime = 0;
 const popupCooldown = 5000;
 
 // Initialize default quality from storage
-browser.storage.local.get('defaultQuality', function(data) {
+chrome.storage.local.get('defaultQuality', function(data) {
   defaultQuality = data.defaultQuality || 'auto';
 });
 
 // Listen for changes in storage
-browser.storage.onChanged.addListener(function(changes, namespace) {
+chrome.storage.onChanged.addListener(function(changes, namespace) {
   if (namespace === 'local' && changes.defaultQuality) {
     defaultQuality = changes.defaultQuality.newValue;
     qualitySet = false;
@@ -53,19 +53,28 @@ async function getCurrentChannelHandle(lastUrl) {
 
 // Function to get channel qualities from storage
 async function getChannelQualities() {
-  const result = await browser.storage.local.get(['channelQualities', 'defaultQuality']);
-  return {
-    channelQualities: result.channelQualities || {},
-    defaultQuality: result.defaultQuality || 'auto'
-  };
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['channelQualities', 'defaultQuality'], (result) => {
+      resolve({
+        channelQualities: result.channelQualities || {},
+        defaultQuality: result.defaultQuality || 'auto'
+      });
+    });
+  });
 }
 
 // Function to inject script into the page
-function injectScript(content) {
-  const script = document.createElement('script');
-  script.textContent = content;
-  (document.head || document.documentElement).appendChild(script);
-  script.remove();
+function injectScript(file) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = chrome.runtime.getURL(file);
+    script.onload = function() {
+      this.remove();
+      resolve();
+    };
+    script.onerror = reject;
+    (document.head || document.documentElement).appendChild(script);
+  });
 }
 
 // Function to show success popup
@@ -105,83 +114,16 @@ async function initializeQualityControl(lastUrl) {
   const { channelQualities } = await getChannelQualities();
   const currentChannel = await getCurrentChannelHandle(lastUrl);
   
-  const scriptContent = `
-    let qualitySetSuccess = false;
-    const channelQualities = ${JSON.stringify(channelQualities)};
-    const currentChannel = "${currentChannel}";
-    let defaultQuality = "${defaultQuality}";
-
-    function setCustomQuality() {
-      const player = document.querySelector('#movie_player');
-      if (!player || typeof player.getAvailableQualityLevels !== 'function') {
-        return false;
-      }
-      
-      const availableQualities = player.getAvailableQualityLevels();
-      let targetQuality = channelQualities.hasOwnProperty(currentChannel) 
-        ? channelQualities[currentChannel] 
-        : defaultQuality;
-
-      function getBestQuality(target, available) {
-        const qualityOrder = ['highres', 'hd2160', 'hd1440', 'hd1080', 'hd720', 'large', 'medium', 'small', 'tiny', 'auto'];
-        const targetIndex = qualityOrder.indexOf(target);
-        
-        if (targetIndex === -1) {
-          return available[0];
-        }
-
-        for (let i = targetIndex; i < qualityOrder.length; i++) {
-          if (available.includes(qualityOrder[i])) {
-            return qualityOrder[i];
-          }
-        }
-
-        return available[0];
-      }
-
-      const bestQuality = getBestQuality(targetQuality, availableQualities);
-      player.setPlaybackQualityRange(bestQuality, bestQuality);
-
-      if (player.getPlayerState() === 2) {
-        player.playVideo();
-      }
-
-      window.postMessage({ type: "QUALITY_SET_SUCCESS", quality: bestQuality }, "*");
-      return true;
-    }
-
-    function ytQualityControl() {
-      if (!qualitySetSuccess) {
-        qualitySetSuccess = setCustomQuality();
-      }
-    }
-
-    ytQualityControl();
+  // Inject the script file
+  await injectScript('inject.js');
   
-    const events = ['yt-navigate-start', 'yt-navigate-finish'];
-    events.forEach(event => {
-      document.addEventListener(event, () => {
-        qualitySetSuccess = false;
-        setTimeout(ytQualityControl, 2000);
-      });
-    });
-
-    const originalPushState = history.pushState;
-    history.pushState = function() {
-      originalPushState.apply(this, arguments);
-      qualitySetSuccess = false;
-      setTimeout(ytQualityControl, 2000);
-    };
-
-    const originalReplaceState = history.replaceState;
-    history.replaceState = function() {
-      originalReplaceState.apply(this, arguments);
-      qualitySetSuccess = false;
-      setTimeout(ytQualityControl, 2000);
-    };
-  `;
-
-  injectScript(scriptContent);
+  // Send the necessary data to the injected script
+  window.postMessage({
+    type: "YOUTUBE_QUALITY_INIT",
+    channelQualities: channelQualities,
+    currentChannel: currentChannel,
+    defaultQuality: defaultQuality
+  }, "*");
 }
 
 // Function to run quality control
