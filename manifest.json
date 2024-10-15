@@ -43,6 +43,7 @@
     "consent.js",
     "delete.svg",
     "icon.png",
-    "refresh.svg"
+    "refresh.svg",
+    "inject.js"
   ]
 }

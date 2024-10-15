@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         channelQualities[channel] = quality;
         browser.storage.local.set({channelQualities}, function() {
           channelInput.value = '';
-          showSuccessPopup(`Channel added with ${quality} quality`);
+          showSuccessPopup(`Channel added with ${qualityMap[quality]} quality`);
           updateChannelList();      
         });
       });
