@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YTResSet - User Consent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #c00;
+        }
+        button {
+            background-color: #c00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>YTResSet - User Consent</h1>
+    <p>Welcome to YTResSet, a Firefox extension that enhances your YouTube viewing experience!</p>
+    <h2>What YTResSet Does:</h2>
+    <ul>
+        <li>Allows you to set custom video resolutions for specific YouTube channels</li>
+        <li>Automatically applies your preferred quality settings when watching videos</li>
+        <li>Stores your preferences locally on your device</li>
+    </ul>
+    <h2>Privacy and Data Usage:</h2>
+    <ul>
+        <li>YTResSet does not collect or transmit any personal data</li>
+        <li>Your channel preferences are stored locally on your device</li>
+        <li>We do not track your browsing history or video watching habits</li>
+    </ul>
+    <p>By clicking "I Agree" below, you consent to the installation and use of YTResSet as described above.</p>
+    <button id="agreeButton">I Agree</button>
+
+    <script>
+        document.getElementById('agreeButton').addEventListener('click', function() {
+            browser.storage.local.set({userConsent: true}, function() {
+                window.close();
+            });
+        });
+    </script>
+</body>
+</html>

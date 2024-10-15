@@ -7,7 +7,10 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h2>YTResSet</h2>
+  <h2>YTResSet</h2>  
+  <button id="refreshButton" title="Refresh YouTube Page">
+    <img src="refresh.svg" alt="Refresh" width="20" height="20">
+  </button>
   <div class="default-quality">
     <label for="defaultQualitySelect">Default Quality:</label>
     <select id="defaultQualitySelect">
@@ -20,9 +23,9 @@
       <option value="hd1080">1080p</option>
       <option value="hd1440">1440p</option>
       <option value="hd2160">2160p (4K)</option>
-    </select>
-  </div>
-  <br/>
+    </select> 
+  </div> 
+  <br/> 
   <div class="input-group">
     <input type="text" id="channelInput" placeholder="Enter channel name">
     <select id="qualitySelect">

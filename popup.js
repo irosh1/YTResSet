@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Get DOM elements
   const channelInput = document.getElementById('channelInput');
   const qualitySelect = document.getElementById('qualitySelect');
   const addButton = document.getElementById('addButton');
   const channelList = document.getElementById('channelList');
   const defaultQualitySelect = document.getElementById('defaultQualitySelect');
+  const refreshButton = document.getElementById('refreshButton');
 
+  // Map of quality values to human-readable labels
   const qualityMap = {
     'auto': 'Auto',
     'tiny': '144p',
@@ -17,8 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
     'hd2160': '2160p (4K)'
   };
 
+  // Function to update the list of channels and their quality settings
   function updateChannelList() {
-    browser.storage.sync.get(['channelQualities', 'defaultQuality'], function(data) {
+    browser.storage.local.get(['channelQualities', 'defaultQuality'], function(data) {
       const channelQualities = data.channelQualities || {};
       channelList.innerHTML = '';
       for (const [channel, quality] of Object.entries(channelQualities)) {
@@ -43,9 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         deleteButton.onclick = function() {
           delete channelQualities[channel];
-          browser.storage.sync.set({channelQualities}, function() {
+          browser.storage.local.set({channelQualities}, function() {
+            showSuccessPopup("Channel deleted");
             updateChannelList();
-            refreshCurrentPage();
           });
         };
 
@@ -59,27 +63,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Event listener for adding a new channel
   addButton.addEventListener('click', function() {
     const channel = channelInput.value.trim();
     const quality = qualitySelect.value;
     if (channel) {
-      browser.storage.sync.get('channelQualities', function(data) {
+      browser.storage.local.get('channelQualities', function(data) {
         const channelQualities = data.channelQualities || {};
         channelQualities[channel] = quality;
-        browser.storage.sync.set({channelQualities}, function() {
+        browser.storage.local.set({channelQualities}, function() {
           channelInput.value = '';
-          updateChannelList();           
-          refreshCurrentPage();
+          showSuccessPopup(`Channel added with ${quality} quality`);
+          updateChannelList();      
         });
       });
     }
   });
 
+  // Event listener for changing the default quality
   defaultQualitySelect.addEventListener('change', function() {
     const defaultQuality = defaultQualitySelect.value;
-    browser.storage.sync.set({defaultQuality}, function() {
-      console.log('Default quality set to:', defaultQuality);
-      // Add a visual feedback for the user
+    browser.storage.local.set({defaultQuality}, function() {
       showSuccessPopup(`Default quality set to ${qualityMap[defaultQuality]}`);
     });
   });
@@ -109,13 +113,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
   }
 
+  // Function to refresh the current YouTube page after settings change
   function refreshCurrentPage() {
     browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      if (tabs[0]) {
+      if (tabs[0] && tabs[0].url.includes('youtube.com')) {
         browser.tabs.reload(tabs[0].id, {bypassCache: true});
+        window.close(); // Close the popup after refreshing
+      } else {
+        showSuccessPopup("No active YouTube tab found");
       }
     });
   }
 
+  // Event listener for the refresh button
+  refreshButton.addEventListener('click', refreshCurrentPage);
+
+  // Initialize the channel list
   updateChannelList();
+});
+
+// Function to request user consent
+function requestUserConsent() {
+  return browser.tabs.create({
+    url: "consent.html"
+  });
+}
+
+// Event listener for addon installation
+browser.runtime.onInstalled.addListener(function(details) {
+  if (details.reason === "install") {
+    requestUserConsent();
+  }
 });
