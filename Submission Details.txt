@@ -5,6 +5,13 @@ YTResSet enhances your YouTube experience by allowing you to set custom video re
 Description:
 <p>YTResSet is a powerful Firefox add-on designed to enhance your YouTube viewing experience. With YTResSet, you have full control over video quality settings for each YouTube channel you watch.</p>
 
+How to get the channel name:
+
+  Go to the YouTube channel: Visit the channel page by searching for it or clicking on a video from that channel.
+  Check the URL: In the browser's address bar, you'll see the channel's URL, which usually follows this pattern:
+  youtube.com/c/ChannelName or youtube.com/user/ChannelName.
+  Extract the name: The portion after /c/ or /user/ in the URL is the original channel name (without the @ symbol).
+
 <h3>Key Features:</h3>
 <ul>
   <li>Set custom video resolutions for specific YouTube channels</li>

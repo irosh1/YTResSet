@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to update the list of channels and their quality settings
   function updateChannelList() {
-    browser.storage.local.get(['channelQualities', 'defaultQuality'], function(data) {
+    chrome.storage.local.get(['channelQualities', 'defaultQuality'], function(data) {
       const channelQualities = data.channelQualities || {};
       channelList.innerHTML = '';
       for (const [channel, quality] of Object.entries(channelQualities)) {
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         deleteButton.onclick = function() {
           delete channelQualities[channel];
-          browser.storage.local.set({channelQualities}, function() {
+          chrome.storage.local.set({channelQualities}, function() {
             showSuccessPopup("Channel deleted");
             updateChannelList();
           });
@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const channel = channelInput.value.trim();
     const quality = qualitySelect.value;
     if (channel) {
-      browser.storage.local.get('channelQualities', function(data) {
+      chrome.storage.local.get('channelQualities', function(data) {
         const channelQualities = data.channelQualities || {};
         channelQualities[channel] = quality;
-        browser.storage.local.set({channelQualities}, function() {
+        chrome.storage.local.set({channelQualities}, function() {
           channelInput.value = '';
           showSuccessPopup(`Channel added with ${quality} quality`);
           updateChannelList();      
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Event listener for changing the default quality
   defaultQualitySelect.addEventListener('change', function() {
     const defaultQuality = defaultQualitySelect.value;
-    browser.storage.local.set({defaultQuality}, function() {
+    chrome.storage.local.set({defaultQuality}, function() {
       showSuccessPopup(`Default quality set to ${qualityMap[defaultQuality]}`);
     });
   });
@@ -140,7 +140,7 @@ function requestUserConsent() {
 }
 
 // Event listener for addon installation
-browser.runtime.onInstalled.addListener(function(details) {
+chrome.runtime.onInstalled.addListener(function(details) {
   if (details.reason === "install") {
     requestUserConsent();
   }
