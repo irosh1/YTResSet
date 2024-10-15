@@ -1,0 +1,27 @@
+Summary:
+YTResSet enhances your YouTube experience by allowing you to set custom video resolutions for specific channels. It automatically applies your preferred quality settings, ensuring optimal viewing across different YouTube channels.
+
+
+Description:
+<p>YTResSet is a powerful Firefox add-on designed to enhance your YouTube viewing experience. With YTResSet, you have full control over video quality settings for each YouTube channel you watch.</p>
+
+<h3>Key Features:</h3>
+<ul>
+  <li>Set custom video resolutions for specific YouTube channels</li>
+  <li>Automatically apply your preferred quality settings when watching videos</li>
+  <li>Easily manage and update your channel-specific preferences</li>
+  <li>Seamless integration with YouTube's interface</li>
+  <li>Lightweight and efficient performance</li>
+</ul>
+
+<h3>How It Works:</h3>
+<p>Once installed, YTResSet allows you to specify your preferred video quality for each YouTube channel. When you visit a video on that channel, the add-on automatically sets the video to your preferred resolution. This saves you the hassle of manually adjusting quality settings for each video you watch.</p>
+
+<h3>Privacy and Data Usage:</h3>
+<ul>
+  <li>YTResSet does not collect or transmit any personal data</li>
+  <li>Your channel preferences are stored locally on your device</li>
+  <li>We do not track your browsing history or video watching habits</li>
+</ul>
+
+<p>Enhance your YouTube viewing experience today with YTResSet - the smart way to manage video quality across your favorite channels!</p>
