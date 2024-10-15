@@ -1,92 +1,136 @@
 body {
-      width: 320px;
-      padding: 20px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-    }
-    h2 {
-      color: #cc0000;
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-    .input-group {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    input, select {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 8px 12px;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      font-size: 14px;
-      background-color: white;
-    }
-    #addButton {
-      grid-column: 1 / -1;
-      padding: 10px;
-      border: none;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: bold;
-      color: white;
-      background-color: #4CAF50;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    #addButton:hover {
-      background-color: #45a049;
-    }
-    #channelList {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .channel-item, .quality-item {
-      padding: 8px 12px;
-      background-color: #ffffff;
-      border-radius: 15px;
-      font-size: 14px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .channel-item {
-      font-weight: bold;
-    }
-    .quality-item {
-      text-align: center;
-      background-color: #e9e9e9;
-    }
-    .delete-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .delete-btn:hover svg {
-    stroke: #ff4444;
-  }
-  .delete-btn svg {
-    transition: stroke 0.3s ease;
-  }
-  .default-quality {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #f0f0f0;
-      border-radius: 20px;
-    }
-    .default-quality label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-    .default-quality select {
-      width: 100%;
-    }
+  width: 320px;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+}
+
+h2 {
+  color: #cc0000;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.input-group {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+input, select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  background-color: white;
+}
+
+#addButton, #refreshButton {
+  grid-column: 1 / -1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#addButton {
+  background-color: #4CAF50;
+}
+
+#addButton:hover {
+  background-color: #45a049;
+}
+
+#refreshButton {
+  background-color: #3498db;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#refreshButton:hover {
+  background-color: #2980b9;
+}
+
+#refreshButton img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+#channelList {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.channel-item, .quality-item {
+  padding: 8px 12px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.channel-item {
+  font-weight: bold;
+}
+
+.quality-item {
+  text-align: center;
+  background-color: #e9e9e9;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn:hover svg {
+  stroke: #ff4444;
+}
+
+.delete-btn svg {
+  transition: stroke 0.3s ease;
+}
+
+.default-quality {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+}
+
+.default-quality label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.default-quality select {
+  width: 100%;
+}

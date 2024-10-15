@@ -6,7 +6,9 @@
   "permissions": [
     "storage",
     "activeTab",
-    "*://www.youtube.com/*"
+    "*://www.youtube.com/*",
+    "notifications",
+    "tabs"
   ],
   "content_scripts": [
     {
@@ -35,5 +37,10 @@
     "gecko": {
       "id": "youtube-quality-control@example.com"
     }
-  }
+  },
+  "web_accessible_resources": [
+    "delete.svg",
+    "icon.png",
+    "refresh.svg"
+  ]
 }
