@@ -128,10 +128,13 @@ async function initializeQualityControl(lastUrl) {
 
 // Function to run quality control
 async function runQualityControl(lastUrl) {
-  if (!qualitySet && attemptCount < maxAttempts) {
-    await initializeQualityControl(lastUrl);
-    attemptCount++;
-    setTimeout(() => runQualityControl(lastUrl), 3000);
+  const url = new URL(lastUrl);
+  if(url.pathname === '/watch' && url.searchParams.has('v')){
+    if (!qualitySet && attemptCount < maxAttempts) {
+      await initializeQualityControl(lastUrl);
+      attemptCount++;
+      setTimeout(() => runQualityControl(lastUrl), 3000);
+    }
   }
 }
 
