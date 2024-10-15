@@ -43,12 +43,6 @@
     <p>By clicking "I Agree" below, you consent to the installation and use of YTResSet as described above.</p>
     <button id="agreeButton">I Agree</button>
 
-    <script>
-        document.getElementById('agreeButton').addEventListener('click', function() {
-            browser.storage.local.set({userConsent: true}, function() {
-                window.close();
-            });
-        });
-    </script>
+    <script src="consent.js"></script>
 </body>
 </html>
