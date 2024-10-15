@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "YTResSet",
-  "version": "1.1",
+  "version": "1.1.1",
   "description": "YTResSet is a handy Firefox extension that lets you take control of your YouTube viewing experience. With YTResSet, you can easily set custom video resolutions for specific YouTube channels, ensuring you always watch videos in your preferred quality. Say goodbye to frustrating buffering and low-resolution videos!",
   "permissions": [
     "storage",
