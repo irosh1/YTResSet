@@ -22,7 +22,7 @@
       
       const availableQualities = player.getAvailableQualityLevels();
       let targetQuality = channelQualities.hasOwnProperty(currentChannel) 
-        ? channelQualities[currentChannel] 
+        ? channelQualities[currentChannel].quality
         : defaultQuality;
   
       function getBestQuality(target, available) {

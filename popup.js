@@ -26,10 +26,27 @@ document.addEventListener('DOMContentLoaded', function() {
     browser.storage.local.get(['channelQualities', 'defaultQuality'], function(data) {
       const channelQualities = data.channelQualities || {};
       channelList.innerHTML = '';
-      for (const [channel, quality] of Object.entries(channelQualities)) {
+      for (const [channel, { quality, iconUrl }] of Object.entries(channelQualities)) {
         const channelItem = document.createElement('div');
         channelItem.className = 'channel-item';
-        channelItem.textContent = channel;
+        //channelItem.textContent = channel;
+
+        // Create channel icon element
+        const channelIcon = document.createElement('img');
+        channelIcon.className = 'channel-icon';
+        channelIcon.src = `https://www.youtube.com/s/desktop/f506bd45/img/favicon_32.png`; // Default YouTube icon
+        channelIcon.alt = '';
+        channelIcon.width = 24;
+        channelIcon.height = 24;
+
+        // Create channel name element
+        const channelName = document.createElement('span');
+        channelName.textContent = channel;
+        channelName.className = 'channel-name';
+
+        // Append icon and name to channelItem
+        channelItem.appendChild(channelIcon);
+        channelItem.appendChild(channelName);
 
         const qualityItem = document.createElement('div');
         qualityItem.className = 'quality-item';
@@ -43,6 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteIcon.alt = 'Delete';
         deleteIcon.width = 16;
         deleteIcon.height = 16;
+
+        // Fetch actual channel icon
+        fetchChannelIcon(channel).then(iconUrl => {
+          if (iconUrl) {
+            channelIcon.src = iconUrl;
+          }
+        });
 
         deleteButton.appendChild(deleteIcon);
 
@@ -71,11 +95,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (channel) {
       browser.storage.local.get('channelQualities', function(data) {
         const channelQualities = data.channelQualities || {};
-        channelQualities[channel] = quality;
-        browser.storage.local.set({channelQualities}, function() {
-          channelInput.value = '';
-          showSuccessPopup(`Channel added with ${qualityMap[quality]} quality`);
-          updateChannelList();      
+        fetchChannelIcon(channel).then(iconUrl => {
+          channelQualities[channel] = { quality, iconUrl };
+          browser.storage.local.set({channelQualities}, function() {
+            channelInput.value = '';
+            showSuccessPopup(`Channel added with ${qualityMap[quality]} quality`);
+            updateChannelList();      
+          });
         });
       });
     }
@@ -133,6 +159,21 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     browser.tabs.create({ url: 'https://addons.mozilla.org/en-US/firefox/addon/ytresset_w35uf' });
   });
+
+  // Function to fetch channel icon
+  async function fetchChannelIcon(channelName) {
+    try {
+      const response = await fetch(`https://www.youtube.com/c/${channelName}`);
+      const text = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, 'text/html');
+      const ogImage = doc.querySelector('meta[property="og:image"]');
+      return ogImage ? ogImage.content : null;
+    } catch (error) {
+      console.error('Error fetching channel icon:', error);
+      return null;
+    }
+  }
 
   // Initialize the channel list
   updateChannelList();

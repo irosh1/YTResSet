@@ -130,7 +130,7 @@ input, select {
   margin-top: 20px;
 }
 
-.channel-item, .quality-item {
+.channel-item {
   padding: 8px 12px;
   background-color: #ffffff;
   border-radius: 15px;
@@ -140,6 +140,11 @@ input, select {
 
 .channel-item {
   font-weight: bold;
+  padding: 8px 12px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .quality-item {
@@ -152,8 +157,6 @@ input, select {
   border: none;
   cursor: pointer;
   padding: 5px;
-  display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -180,4 +183,29 @@ input, select {
 
 .default-quality select {
   width: 100%;
+}
+
+.channel-item, .quality-item, .delete-btn {
+  display: flex;
+  align-items: center;
+}
+
+.channel-icon {
+  margin-right: 8px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+}
+
+.channel-name {
+  flex-grow: 1;
+}
+
+.quality-item {
+  text-align: center;
+  background-color: #e9e9e9;
+  padding: 8px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
