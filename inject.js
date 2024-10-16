@@ -21,9 +21,9 @@
       }
       
       const availableQualities = player.getAvailableQualityLevels();
-      let targetQuality = channelQualities.hasOwnProperty(currentChannel) 
-        ? channelQualities[currentChannel].quality
-        : defaultQuality;
+      let targetQuality = Object.keys(channelQualities).some(key => key.toLowerCase() === currentChannel.toLowerCase()) 
+          ? channelQualities[Object.keys(channelQualities).find(key => key.toLowerCase() === currentChannel.toLowerCase())].quality
+          : defaultQuality;
   
       function getBestQuality(target, available) {
         const qualityOrder = ['highres', 'hd2160', 'hd1440', 'hd1080', 'hd720', 'large', 'medium', 'small', 'tiny', 'auto'];
