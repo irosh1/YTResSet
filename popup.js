@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const channelList = document.getElementById('channelList');
   const defaultQualitySelect = document.getElementById('defaultQualitySelect');
   const refreshButton = document.getElementById('refreshButton');
+  const helpButton = document.getElementById('helpIcon');
 
   // Map of quality values to human-readable labels
   const qualityMap = {
@@ -127,6 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Event listener for the refresh button
   refreshButton.addEventListener('click', refreshCurrentPage);
+  
+  helpButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    browser.tabs.create({ url: 'https://addons.mozilla.org/en-US/firefox/addon/ytresset_w35uf' });
+  });
 
   // Initialize the channel list
   updateChannelList();
