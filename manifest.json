@@ -7,7 +7,6 @@
     "storage",
     "activeTab",
     "*://www.youtube.com/*",
-    "notifications",
     "tabs"
   ],
   "content_scripts": [
