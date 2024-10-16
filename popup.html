@@ -7,40 +7,51 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h2>YTResSet</h2>  
-  <button id="refreshButton" title="Refresh YouTube Page">
-    <img src="refresh.svg" alt="Refresh" width="20" height="20">
-  </button>
-  <div class="default-quality">
-    <label for="defaultQualitySelect">Default Quality:</label>
-    <select id="defaultQualitySelect">
-      <option value="auto">Auto</option>
-      <option value="tiny">144p</option>
-      <option value="small">240p</option>
-      <option value="medium">360p</option>
-      <option value="large">480p</option>
-      <option value="hd720">720p</option>
-      <option value="hd1080">1080p</option>
-      <option value="hd1440">1440p</option>
-      <option value="hd2160">2160p (4K)</option>
-    </select> 
-  </div> 
-  <br/> 
-  <div class="input-group">
-    <input type="text" id="channelInput" placeholder="Enter channel name">
-    <select id="qualitySelect">
-      <option value="tiny">144p</option>
-      <option value="small">240p</option>
-      <option value="medium">360p</option>
-      <option value="large">480p</option>
-      <option value="hd720">720p</option>
-      <option value="hd1080">1080p</option>
-      <option value="hd1440">1440p</option>
-      <option value="hd2160">2160p (4K)</option>
-    </select>
-    <button id="addButton">Add Channel</button>
-  </div>
-  <div id="channelList"></div>  
+  <header>
+    <div class="title-container">
+      <h2>YTResSet</h2>
+      <a href="#" id="helpIcon" aria-label="Open help page in new tab">
+        <img src="help.svg" alt="" width="16" height="16">
+      </a>
+    </div>
+    <button id="refreshButton" title="Refresh YouTube Page">
+      <img src="refresh.svg" alt="Refresh" width="20" height="20">
+    </button>
+  </header>
+
+  <main>
+    <div class="default-quality">
+      <label for="defaultQualitySelect">Default Quality:</label>
+      <select id="defaultQualitySelect">
+        <option value="auto">Auto</option>
+        <option value="tiny">144p</option>
+        <option value="small">240p</option>
+        <option value="medium">360p</option>
+        <option value="large">480p</option>
+        <option value="hd720">720p</option>
+        <option value="hd1080">1080p</option>
+        <option value="hd1440">1440p</option>
+        <option value="hd2160">2160p (4K)</option>
+      </select> 
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="channelInput" placeholder="Enter channel name">
+      <select id="qualitySelect">
+        <option value="tiny">144p</option>
+        <option value="small">240p</option>
+        <option value="medium">360p</option>
+        <option value="large">480p</option>
+        <option value="hd720">720p</option>
+        <option value="hd1080">1080p</option>
+        <option value="hd1440">1440p</option>
+        <option value="hd2160">2160p (4K)</option>
+      </select>
+      <button id="addButton">Add Channel</button>
+    </div>
+    <div id="channelList"></div>
+  </main>
+
   <script src="popup.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const channelList = document.getElementById('channelList');
   const defaultQualitySelect = document.getElementById('defaultQualitySelect');
   const refreshButton = document.getElementById('refreshButton');
+  const helpButton = document.getElementById('helpIcon');
 
   // Map of quality values to human-readable labels
   const qualityMap = {
@@ -115,9 +116,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to refresh the current YouTube page after settings change
   function refreshCurrentPage() {
-    browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       if (tabs[0] && tabs[0].url.includes('youtube.com')) {
-        browser.tabs.reload(tabs[0].id, {bypassCache: true});
+        chrome.tabs.reload(tabs[0].id, {bypassCache: true});
         window.close(); // Close the popup after refreshing
       } else {
         showSuccessPopup("No active YouTube tab found");
@@ -128,13 +129,19 @@ document.addEventListener('DOMContentLoaded', function() {
   // Event listener for the refresh button
   refreshButton.addEventListener('click', refreshCurrentPage);
 
+  // Event listener for help icon button
+  helpButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    chrome.tabs.create({ url: 'https://addons.mozilla.org/en-US/firefox/addon/ytresset_w35uf' });
+  });
+
   // Initialize the channel list
   updateChannelList();
 });
 
 // Function to request user consent
 function requestUserConsent() {
-  return browser.tabs.create({
+  return chrome.tabs.create({
     url: "consent.html"
   });
 }
