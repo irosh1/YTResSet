@@ -15,6 +15,10 @@
   });
 
   function setCustomQuality() {
+    const url = new URL(location.href);
+    if(url.pathname !== '/watch' && !url.searchParams.has('v')){
+      return false;
+    }
     const player = document.querySelector('#movie_player');
     if (!player || typeof player.getAvailableQualityLevels !== 'function') {
       return false;
