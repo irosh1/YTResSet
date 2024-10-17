@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   helpButton.addEventListener('click', function(e) {
     e.preventDefault();
-    chrome.tabs.create({ url: 'https://addons.mozilla.org/en-US/firefox/addon/ytresset_w35uf' });
+    chrome.tabs.create({ url: 'https://chromewebstore.google.com/detail/ytresset/cfmpaflpfficbgoceofgjagfapkcfjga' });
   });
 
   // Function to fetch channel icon
